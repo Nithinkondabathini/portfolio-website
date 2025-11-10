@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Email Validation Unit Tests</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .container {
+      background: #111827;
+      border: 1px solid #1f2937;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    h1 {
+      color: #22d3ee;
+      margin-top: 0;
+    }
+    .test-result {
+      margin: 10px 0;
+      padding: 10px;
+      border-left: 4px solid #666;
+      background: #0b1220;
+    }
+    .test-result.passed {
+      border-left-color: #51cf66;
+      background: #0d3d0d;
+    }
+    .test-result.failed {
+      border-left-color: #ff6b6b;
+      background: #3d0d0d;
+    }
+    .summary {
+      margin-top: 20px;
+      padding: 15px;
+      background: #1e293b;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    button {
+      background: #0ea5e9;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    button:hover {
+      filter: brightness(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Email Validation Unit Tests</h1>
+    <p>Portfolio Website - Kondabattini Nithin Kumar</p>
+    
+    <button onclick="runTests()">Run Tests</button>
+    
+    <div id="results"></div>
+    <div id="summary"></div>
+  </div>
+
+  <script>
+    // Email validation function (same as in portfolio)
+    function isValidEmail(email) {
+      const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return re.test(String(email).trim());
+    }
+
+    // Test cases
+    const testCases = [
+      { email: 'valid@example.com', expected: true, description: 'Standard email' },
+      { email: 'user.name@domain.co.uk', expected: true, description: 'Email with subdomain and multiple dots' },
+      { email: 'test+tag@example.com', expected: true, description: 'Email with + sign' },
+      { email: 'user_name@example.com', expected: true, description: 'Email with underscore' },
+      { email: '123@example.com', expected: true, description: 'Email starting with numbers' },
+      { email: 'invalid@', expected: false, description: 'Missing domain' },
+      { email: '@example.com', expected: false, description: 'Missing local part' },
+      { email: 'nospacehere@domain', expected: false, description: 'Missing TLD' },
+      { email: '', expected: false, description: 'Empty string' },
+      { email: 'no-at-sign.com', expected: false, description: 'No @ symbol' },
+      { email: 'user@.com', expected: false, description: 'Empty domain name' },
+      { email: 'user@domain..com', expected: false, description: 'Double dots in domain' },
+      { email: 'user name@example.com', expected: false, description: 'Space in local part' },
+      { email: 'user@domain com', expected: false, description: 'Space in domain' },
+      { email: 'test@example.c', expected: false, description: 'Single letter TLD' }
+    ];
+
+    function runTests() {
+      const resultsDiv = document.getElementById('results');
+      const summaryDiv = document.getElementById('summary');
+      
+      resultsDiv.innerHTML = '';
+      summaryDiv.innerHTML = '';
+
+      let passed = 0;
+      let failed = 0;
+
+      testCases.forEach((testCase, index) => {
+        const result = isValidEmail(testCase.email);
+        const isCorrect = result === testCase.expected;
+        
+        if (isCorrect) {
+          passed++;
+        } else {
+          failed++;
+        }
+
+        const resultDiv = document.createElement('div');
+        resultDiv.className = `test-result ${isCorrect ? 'passed' : 'failed'}`;
+        resultDiv.innerHTML = `
+          <strong>Test ${index + 1}: ${isCorrect ? '✓ PASSED' : '✗ FAILED'}</strong><br>
+          Description: ${testCase.description}<br>
+          Email: "${testCase.email}"<br>
+          Expected: ${testCase.expected} | Got: ${result}
+        `;
+        
+        resultsDiv.appendChild(resultDiv);
+      });
+
+      const summaryDiv2 = document.createElement('div');
+      summaryDiv2.className = 'summary';
+      summaryDiv2.innerHTML = `
+        <h2 style="margin-top: 0; color: #22d3ee;">Test Summary</h2>
+        Total Tests: ${testCases.length}<br>
+        Passed: <span style="color: #51cf66;">${passed}</span><br>
+        Failed: <span style="color: #ff6b6b;">${failed}</span><br>
+        Success Rate: ${((passed / testCases.length) * 100).toFixed(1)}%
+      `;
+      
+      resultsDiv.appendChild(summaryDiv2);
+      
+      // Log to console
+      console.log(`\n=== Email Validation Test Results ===`);
+      console.log(`Total Tests: ${testCases.length}`);
+      console.log(`Passed: ${passed}`);
+      console.log(`Failed: ${failed}`);
+      console.log(`Success Rate: ${((passed / testCases.length) * 100).toFixed(1)}%`);
+    }
+
+    // Auto-run tests on page load
+    window.addEventListener('load', runTests);
+  </script>
+</body>
+</html>
