@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kondabattini Nithin Kumar — Portfolio</title>
+  <meta name="description" content="Portfolio of Kondabattini Nithin Kumar" />
+  <style>
+    :root{
+      --bg:#0f172a;
+      --card:#111827cc;
+      --muted:#cbd5e1;
+      --text:#e5e7eb;
+      --accent:#22d3ee;
+      --ring:#38bdf8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1000px 600px at 10% -30%, #1e293b 10%, transparent 60%),
+                  radial-gradient(800px 500px at 120% 20%, #0ea5e9 0%, transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    .container{max-width:980px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:28px}
+    .title{font-size:clamp(28px,4vw,44px);margin:0}
+    .subtitle{margin:6px 0 0;color:var(--muted);font-size:clamp(14px,2.2vw,18px)}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #334155;border-radius:999px;background:#0b1220cc;backdrop-filter: blur(6px)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+    .card{grid-column:span 12;background:var(--card);border:1px solid #1f2937;border-radius:16px;padding:22px;box-shadow:0 10px 30px #00000044}
+    @media (min-width:800px){
+      .card.span-6{grid-column:span 6}
+      .card.span-4{grid-column:span 4}
+    }
+    h2{margin:0 0 10px;font-size:22px}
+    p{margin:0 0 10px}
+    ul{margin:8px 0 0 20px}
+    .list{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 0;padding:0;list-style:none}
+    .chip{padding:8px 12px;border-radius:999px;background:#0b1220;border:1px solid #233044}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .contact{display:grid;gap:10px}
+    .field{display:grid;gap:6px}
+    input,textarea,button{
+      font:inherit;color:inherit;background:#0b1220;border:1px solid #233044;border-radius:12px;padding:10px 12px;outline:none
+    }
+    input:focus,textarea:focus{box-shadow:0 0 0 3px #0ea5e910;border-color:var(--ring)}
+    button{cursor:pointer;background:#0ea5e9;border-color:#0ea5e9}
+    button:hover{filter:brightness(1.1)}
+    footer{opacity:.7;text-align:center;padding:30px 0}
+    .sr{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1 class="title">Kondabattini Nithin Kumar</h1>
+        <p class="subtitle">Student</p>
+      </div>
+      <div class="badge" aria-label="quick summary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 4v6c0 5-7 8-7 8s-7-3-7-8V7l7-4z" stroke="#22d3ee" stroke-width="1.5"/><circle cx="12" cy="11" r="3" stroke="#22d3ee" stroke-width="1.5"/></svg>
+        <span>Cloud & Software Enthusiast</span>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card span-6">
+        <h2>Certificates</h2>
+        <ul>
+          <li>AWS Cloud Practitioner</li>
+          <li>Microsoft Azure Fundamentals</li>
+        </ul>
+      </article>
+
+      <article class="card span-6">
+        <h2>Courses</h2>
+        <ul class="list">
+          <li class="chip">SESD</li>
+          <li class="chip">MICR</li>
+        </ul>
+      </article>
+
+      <article class="card span-12">
+        <h2>About</h2>
+        <p>Motivated student focusing on software engineering, systems, and cloud technologies. Actively learning and building projects to strengthen fundamentals and real-world problem solving.</p>
+      </article>
+
+      <article class="card span-6">
+        <h2>Contact</h2>
+        <p>Email: <a id="emailLink" href="mailto:nithin.kondabattini@example.com">nithin.kondabattini@example.com</a></p>
+      </article>
+
+      <article class="card span-6">
+        <h2>Quick Contact Form</h2>
+        <form class="contact" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Say hello..." required></textarea>
+          </div>
+          <button type="submit">Send</button>
+          <p id="status" role="status" aria-live="polite"></p>
+        </form>
+      </article>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Kondabattini Nithin Kumar
+    </footer>
+  </div>
+
+  <script>
+    // Email validation function
+    function isValidEmail(email){
+      const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      return re.test(String(email).trim());
+    }
+
+    // Unit tests for email validation
+    function runEmailValidationTests(){
+      const tests = [
+        { email: 'valid@example.com', expected: true },
+        { email: 'user.name@domain.co.uk', expected: true },
+        { email: 'test+tag@example.com', expected: true },
+        { email: 'invalid@', expected: false },
+        { email: '@example.com', expected: false },
+        { email: 'nospacehere@domain', expected: false },
+        { email: '', expected: false },
+        { email: 'no-at-sign.com', expected: false }
+      ];
+
+      let passed = 0;
+      let failed = 0;
+
+      tests.forEach((test, index) => {
+        const result = isValidEmail(test.email);
+        if (result === test.expected) {
+          console.log(`Test ${index + 1} PASSED: "${test.email}" => ${result}`);
+          passed++;
+        } else {
+          console.log(`Test ${index + 1} FAILED: "${test.email}" => ${result}, expected ${test.expected}`);
+          failed++;
+        }
+      });
+
+      console.log(`\nUnit Test Summary: ${passed} passed, ${failed} failed`);
+      return { passed, failed, total: tests.length };
+    }
+
+    // Form submission handler
+    const form = document.getElementById('contactForm');
+    const statusEl = document.getElementById('status');
+
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const email = form.email.value;
+      const name = form.name.value.trim();
+      const message = form.message.value.trim();
+
+      if(!name || !message){
+        statusEl.textContent = 'Please fill all fields.';
+        statusEl.style.color = '#ff6b6b';
+        return;
+      }
+      if(!isValidEmail(email)){
+        statusEl.textContent = 'Please enter a valid email address.';
+        statusEl.style.color = '#ff6b6b';
+        return;
+      }
+      statusEl.textContent = 'Thanks for reaching out! We will get back to you soon.';
+      statusEl.style.color = '#51cf66';
+      form.reset();
+      setTimeout(() => {
+        statusEl.textContent = '';
+      }, 5000);
+    });
+
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Run unit tests on page load (output to console)
+    window.addEventListener('load', () => {
+      console.log('Running email validation unit tests...');
+      runEmailValidationTests();
+    });
+  </script>
+</body>
+</html>
